@@ -51,9 +51,9 @@ class MainTest {
     private static final String RULES = "--dsl";
 
     /**
-     * The "--output" option as an argument example.
+     * The "--json" option as an argument example.
      */
-    private static final String OUTPUT = "--output";
+    private static final String JSON = "--json";
 
     /**
      * Test passing options to main().
@@ -68,7 +68,7 @@ class MainTest {
             code.toString(),
             MainTest.RULES,
             dsl.toString(),
-            MainTest.OUTPUT,
+            MainTest.JSON,
             source.resolve("example.json").toString(),
         };
         boolean caught = false;
