@@ -79,7 +79,7 @@ public final class Main {
      * The json file to store result ASTs.
      */
     @Parameter(
-        names = { "--output", "-o" },
+        names = { "--json", "-j" },
         validateWith = JsonPathValidator.class,
         required = true,
         arity = 1,
