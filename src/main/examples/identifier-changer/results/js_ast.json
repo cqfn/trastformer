@@ -1,0 +1,142 @@
+{
+  "root": {
+    "type": "Program",
+    "children": [
+      {
+        "type": "ClassDeclaration",
+        "children": [
+          {
+            "type": "Identifier",
+            "data": "Program"
+          },
+          {
+            "type": "ClassBody",
+            "children": [
+              {
+                "type": "FunctionDeclaration",
+                "children": [
+                  {
+                    "type": "Identifier",
+                    "data": "count"
+                  },
+                  {
+                    "type": "ParameterBlock",
+                    "children": [
+                      {
+                        "type": "Parameter",
+                        "children": [
+                          {
+                            "type": "Identifier",
+                            "data": "first"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Parameter",
+                        "children": [
+                          {
+                            "type": "Identifier",
+                            "data": "second"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "StatementBlock",
+                    "children": [
+                      {
+                        "type": "Return",
+                        "children": [
+                          {
+                            "type": "Addition",
+                            "children": [
+                              {
+                                "type": "FunctionCall",
+                                "children": [
+                                  {
+                                    "type": "Name",
+                                    "children": [
+                                      {
+                                        "type": "Identifier",
+                                        "data": "Math"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "Identifier",
+                                    "data": "abs"
+                                  },
+                                  {
+                                    "type": "ExpressionList",
+                                    "children": [
+                                      {
+                                        "type": "Variable",
+                                        "children": [
+                                          {
+                                            "type": "Name",
+                                            "children": [
+                                              {
+                                                "type": "Identifier",
+                                                "data": "first"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "FunctionCall",
+                                "children": [
+                                  {
+                                    "type": "Name",
+                                    "children": [
+                                      {
+                                        "type": "Identifier",
+                                        "data": "Math"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "Identifier",
+                                    "data": "abs"
+                                  },
+                                  {
+                                    "type": "ExpressionList",
+                                    "children": [
+                                      {
+                                        "type": "Variable",
+                                        "children": [
+                                          {
+                                            "type": "Name",
+                                            "children": [
+                                              {
+                                                "type": "Identifier",
+                                                "data": "second"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

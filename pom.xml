@@ -80,6 +80,8 @@ SOFTWARE.
             <exclude>duplicatefinder:.*</exclude>
             <exclude>checkstyle:/src/test/resources/.*</exclude>
             <exclude>pmd:/src/test/resources/.*</exclude>
+            <exclude>checkstyle:/src/main/examples/.*</exclude>
+            <exclude>pmd:/src/main/examples/.*</exclude>
           </excludes>
         </configuration>
         <executions>

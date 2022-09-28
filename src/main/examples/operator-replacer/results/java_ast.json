@@ -1,0 +1,181 @@
+{
+  "root": {
+    "type": "Program",
+    "children": [
+      {
+        "type": "ClassDeclaration",
+        "children": [
+          {
+            "type": "Identifier",
+            "data": "Program"
+          },
+          {
+            "type": "ClassBody",
+            "children": [
+              {
+                "type": "FunctionDeclaration",
+                "children": [
+                  {
+                    "type": "ModifierBlock",
+                    "children": [
+                      {
+                        "type": "Modifier",
+                        "data": "public"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "PrimitiveType",
+                    "data": "int"
+                  },
+                  {
+                    "type": "Identifier",
+                    "data": "c"
+                  },
+                  {
+                    "type": "ParameterBlock",
+                    "children": [
+                      {
+                        "type": "Parameter",
+                        "children": [
+                          {
+                            "type": "ModifierBlock",
+                            "children": [
+                              {
+                                "type": "Modifier",
+                                "data": "final"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "PrimitiveType",
+                            "data": "int"
+                          },
+                          {
+                            "type": "Identifier",
+                            "data": "x"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Parameter",
+                        "children": [
+                          {
+                            "type": "ModifierBlock",
+                            "children": [
+                              {
+                                "type": "Modifier",
+                                "data": "final"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "PrimitiveType",
+                            "data": "int"
+                          },
+                          {
+                            "type": "Identifier",
+                            "data": "y"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "StatementBlock",
+                    "children": [
+                      {
+                        "type": "Return",
+                        "children": [
+                          {
+                            "type": "Multiplication",
+                            "children": [
+                              {
+                                "type": "FunctionCall",
+                                "children": [
+                                  {
+                                    "type": "Name",
+                                    "children": [
+                                      {
+                                        "type": "Identifier",
+                                        "data": "Math"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "Identifier",
+                                    "data": "abs"
+                                  },
+                                  {
+                                    "type": "ExpressionList",
+                                    "children": [
+                                      {
+                                        "type": "Variable",
+                                        "children": [
+                                          {
+                                            "type": "Name",
+                                            "children": [
+                                              {
+                                                "type": "Identifier",
+                                                "data": "x"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "FunctionCall",
+                                "children": [
+                                  {
+                                    "type": "Name",
+                                    "children": [
+                                      {
+                                        "type": "Identifier",
+                                        "data": "Math"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "Identifier",
+                                    "data": "abs"
+                                  },
+                                  {
+                                    "type": "ExpressionList",
+                                    "children": [
+                                      {
+                                        "type": "Variable",
+                                        "children": [
+                                          {
+                                            "type": "Name",
+                                            "children": [
+                                              {
+                                                "type": "Identifier",
+                                                "data": "y"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

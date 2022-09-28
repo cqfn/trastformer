@@ -60,3 +60,5 @@ Example:
 ```
 java -jar trastformer.jar --parse D:\sources\MyClass.java --rules D:\dsl\rules.dsl -j D:\storage\ResultAst.json
 ```
+
+See examples of sources, files with rules and results of transformation [here](src/main/examples).
