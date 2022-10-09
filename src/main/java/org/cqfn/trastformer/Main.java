@@ -33,12 +33,17 @@ import java.util.logging.Logger;
 import org.cqfn.astranaut.api.TreeProcessor;
 import org.cqfn.astranaut.core.Node;
 import org.cqfn.astranaut.core.exceptions.BaseException;
+import org.cqfn.astranaut.core.utils.FilesWriter;
 import org.cqfn.astranaut.core.utils.JsonSerializer;
 import org.cqfn.astranaut.exceptions.ProcessorException;
 import org.cqfn.astranaut.utils.cli.RulesFileConverter;
+import org.cqfn.trastformer.cli.FileNameValidator;
 import org.cqfn.uast.cli.JsonPathValidator;
 import org.cqfn.uast.cli.LanguageConverter;
+import org.cqfn.uast.lang.FactorySelector;
 import org.cqfn.uast.lang.SourceCodeParser;
+import org.cqfn.uast.lang.java.gen.CodeBuilder;
+import org.cqfn.uast.lang.java.gen.CodeGenerator;
 
 /**
  * Main class.
@@ -81,11 +86,22 @@ public final class Main {
     @Parameter(
         names = { "--json", "-j" },
         validateWith = JsonPathValidator.class,
-        required = true,
         arity = 1,
         description = "The name (possibly path) of the json file with extension"
     )
     private File json;
+
+    /**
+     * The file to store the generated code.
+     */
+    @Parameter(
+        names = { "--output", "-o" },
+        validateWith = FileNameValidator.class,
+        required = true,
+        arity = 1,
+        description = "The name (possibly path) of the generated file with extension"
+    )
+    private File output;
 
     /**
      * The programming language for which the analysis is performed.
@@ -154,6 +170,7 @@ public final class Main {
         Node result = node;
         final String rules = this.dsl.getPath();
         final TreeProcessor processor = new TreeProcessor();
+        processor.setFactory(FactorySelector.INSTANCE.select(lang));
         try {
             processor.loadRules(rules);
             result = processor.transform(node);
@@ -161,7 +178,23 @@ public final class Main {
             LOG.severe(String.format("%s, %s", exc.getInitiator(), exc.getErrorMessage()));
             throw exc;
         }
-        final JsonSerializer serializer = new JsonSerializer(result);
-        serializer.serializeToFile(this.json.getPath());
+        final CodeBuilder builder = new CodeBuilder();
+        final CodeGenerator generator = new CodeGenerator(builder);
+        generator.generate(result);
+        final FilesWriter writer = new FilesWriter(this.output.getAbsolutePath());
+        final boolean created = writer.writeStringNoExcept(builder.toString());
+        if (!created) {
+            LOG.severe(String.format("Cannot write to file: %s", this.output));
+        }
+        if (this.json != null) {
+            final JsonSerializer serializer = new JsonSerializer(result);
+            serializer.serializeToFile(this.json.getPath());
+//            final TreeVisualizer visualizer = new TreeVisualizer(result);
+//            try {
+//                visualizer.visualize(new File("src/main/examples/operator-replacer/results/Program_gen_java.png"));
+//            } catch (final WrongFileExtension exception) {
+//                LOG.severe(String.format("Cannot convert to png"));
+//            }
+        }
     }
 }
