@@ -53,7 +53,7 @@ class MainTest {
     /**
      * The "--json" option as an argument example.
      */
-    private static final String JSON = "--json";
+    private static final String OUTPUT = "--output";
 
     /**
      * Test passing options to main().
@@ -68,8 +68,8 @@ class MainTest {
             code.toString(),
             MainTest.RULES,
             dsl.toString(),
-            MainTest.JSON,
-            source.resolve("example.json").toString(),
+            MainTest.OUTPUT,
+            source.resolve("example_gen.java").toString(),
         };
         boolean caught = false;
         try {
@@ -124,7 +124,9 @@ class MainTest {
      */
     private Path createTempSourceFile(@TempDir final Path source) throws IOException {
         final Path file = source.resolve("example.java");
-        final List<String> lines = Collections.singletonList("class X{int calc(){return 2 + 3;}}");
+        final List<String> lines = Collections.singletonList(
+            "class X{public int calc(){return 2 + 3;}}"
+        );
         Files.write(file, lines);
         return file;
     }

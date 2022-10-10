@@ -189,12 +189,6 @@ public final class Main {
         if (this.json != null) {
             final JsonSerializer serializer = new JsonSerializer(result);
             serializer.serializeToFile(this.json.getPath());
-//            final TreeVisualizer visualizer = new TreeVisualizer(result);
-//            try {
-//                visualizer.visualize(new File("src/main/examples/operator-replacer/results/Program_gen_java.png"));
-//            } catch (final WrongFileExtension exception) {
-//                LOG.severe(String.format("Cannot convert to png"));
-//            }
         }
     }
 }

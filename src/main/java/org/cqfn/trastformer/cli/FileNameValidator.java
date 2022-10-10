@@ -12,7 +12,8 @@ import java.util.Optional;
  *
  * @since 0.1
  */
-public class FileNameValidator implements IParameterValidator {
+public final class FileNameValidator implements IParameterValidator {
+    @Override
     /**
      * Validates an input option parameter that should contain
      * a path to the source file with extension.
@@ -20,7 +21,6 @@ public class FileNameValidator implements IParameterValidator {
      * @param value The option value
      * @throws ParameterException
      */
-    @Override
     public void validate(final String name, final String value) throws ParameterException {
         if (value.charAt(0) == '-') {
             final StringBuilder message = new StringBuilder(50);
