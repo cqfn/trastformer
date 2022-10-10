@@ -76,7 +76,7 @@ public final class FileNameValidator implements IParameterValidator {
             message
                 .append("The parameter [")
                 .append(value)
-                .append("] should be a source file");
+                .append("] should be a valid source file");
             throw new ParameterException(message.toString());
         }
     }

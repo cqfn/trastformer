@@ -39,37 +39,139 @@ import org.junit.jupiter.api.io.TempDir;
  *
  * @since 0.1
  */
+@SuppressWarnings("PMD.TooManyMethods")
 class MainTest {
     /**
-     * The "--parse" option as an argument example.
+     * The "--code" option.
      */
-    private static final String PARSE = "--parse";
+    private static final String CODE = "--code";
 
     /**
-     * The "--rules" option as an argument example.
+     * The "--rules" option.
      */
-    private static final String RULES = "--dsl";
+    private static final String RULES = "--rules";
 
     /**
-     * The "--json" option as an argument example.
+     * The "--output" option.
      */
     private static final String OUTPUT = "--output";
 
     /**
-     * Test passing options to main().
+     * The "--lang" option.
+     */
+    private static final String LANG = "--lang";
+
+    /**
+     * The "--json" option.
+     */
+    private static final String JSON = "--json";
+
+    /**
+     * The "--image" option.
+     */
+    private static final String IMAGE = "--image";
+
+    /**
+     * The Java language name.
+     */
+    private static final String JAVA = "java";
+
+    /**
+     * Test passing required options to main().
      * @param source A temporary directory
      */
     @Test
     void testNoException(@TempDir final Path source) throws IOException {
-        final Path code = this.createTempSourceFile(source);
+        final Path code = this.createTempSourceFile(source, MainTest.JAVA);
         final Path dsl = this.createTempDslFile(source);
         final String[] example = {
-            MainTest.PARSE,
+            MainTest.CODE,
             code.toString(),
             MainTest.RULES,
             dsl.toString(),
             MainTest.OUTPUT,
             source.resolve("example_gen.java").toString(),
+        };
+        boolean caught = false;
+        try {
+            Main.main(example);
+        } catch (final  ParameterException | IOException | ProcessorException exc) {
+            caught = true;
+        }
+        Assertions.assertFalse(caught);
+    }
+
+    /**
+     * Test passing options that contain "--lang" to main().
+     * @param source A temporary directory
+     */
+    @Test
+    void testWithLangSpecified(@TempDir final Path source) throws IOException {
+        final Path code = this.createTempSourceFile(source, "txt");
+        final Path dsl = this.createTempDslFile(source);
+        final String[] example = {
+            MainTest.CODE,
+            code.toString(),
+            MainTest.LANG,
+            MainTest.JAVA,
+            MainTest.RULES,
+            dsl.toString(),
+            MainTest.OUTPUT,
+            source.resolve("example_gen.java").toString(),
+        };
+        boolean caught = false;
+        try {
+            Main.main(example);
+        } catch (final  ParameterException | IOException | ProcessorException exc) {
+            caught = true;
+        }
+        Assertions.assertFalse(caught);
+    }
+
+    /**
+     * Test passing options that contain "--json" to main().
+     * @param source A temporary directory
+     */
+    @Test
+    void testWithJson(@TempDir final Path source) throws IOException {
+        final Path code = this.createTempSourceFile(source, MainTest.JAVA);
+        final Path dsl = this.createTempDslFile(source);
+        final String[] example = {
+            MainTest.CODE,
+            code.toString(),
+            MainTest.RULES,
+            dsl.toString(),
+            MainTest.OUTPUT,
+            source.resolve("example_gen.java").toString(),
+            MainTest.JSON,
+            source.resolve("tree_gen.json").toString(),
+        };
+        boolean caught = false;
+        try {
+            Main.main(example);
+        } catch (final  ParameterException | IOException | ProcessorException exc) {
+            caught = true;
+        }
+        Assertions.assertFalse(caught);
+    }
+
+    /**
+     * Test passing options that contain "--image" to main().
+     * @param source A temporary directory
+     */
+    @Test
+    void testWithImage(@TempDir final Path source) throws IOException {
+        final Path code = this.createTempSourceFile(source, MainTest.JAVA);
+        final Path dsl = this.createTempDslFile(source);
+        final String[] example = {
+            MainTest.CODE,
+            code.toString(),
+            MainTest.RULES,
+            dsl.toString(),
+            MainTest.OUTPUT,
+            source.resolve("example_gen.java").toString(),
+            MainTest.IMAGE,
+            source.resolve("tree_gen.png").toString(),
         };
         boolean caught = false;
         try {
@@ -97,12 +199,12 @@ class MainTest {
     }
 
     /**
-     * Test passing the {@code --parse} option with no parameters to main().
+     * Test passing the {@code --code} option with no parameters to main().
      */
     @Test
     void testGenerateWithoutParameters() {
         final String[] example = {
-            MainTest.PARSE,
+            MainTest.CODE,
         };
         boolean caught = false;
         String message = "";
@@ -113,17 +215,113 @@ class MainTest {
             message = exc.getMessage();
         }
         Assertions.assertTrue(caught);
-        Assertions.assertEquals("Expected a value after parameter --parse", message);
+        Assertions.assertEquals("Expected a value after parameter --code", message);
+    }
+
+    /**
+     * Test passing the {@code --output} option with wrong extension to main().
+     * @param source A temporary directory
+     */
+    @Test
+    void testOutputOptionWithWrongExtension(@TempDir final Path source) throws IOException {
+        final Path code = this.createTempSourceFile(source, MainTest.JAVA);
+        final Path dsl = this.createTempDslFile(source);
+        final String output = source.resolve("example_gen.go").toString();
+        final String[] example = {
+            MainTest.CODE,
+            code.toString(),
+            MainTest.RULES,
+            dsl.toString(),
+            MainTest.OUTPUT,
+            output,
+        };
+        boolean caught = false;
+        String message = "";
+        try {
+            Main.main(example);
+        } catch (final ParameterException | IOException | ProcessorException exc) {
+            caught = true;
+            message = exc.getMessage();
+        }
+        Assertions.assertTrue(caught);
+        Assertions.assertEquals(
+            String.format("The parameter [%s] should be a valid source file", output),
+            message
+        );
+    }
+
+    /**
+     * Test passing the {@code --output} option with wrong value to main().
+     * @param source A temporary directory
+     */
+    @Test
+    void testOutputOptionWithWrongValue(@TempDir final Path source) throws IOException {
+        final Path code = this.createTempSourceFile(source, MainTest.JAVA);
+        final Path dsl = this.createTempDslFile(source);
+        final String output = "F:result.java";
+        final String[] example = {
+            MainTest.CODE,
+            code.toString(),
+            MainTest.RULES,
+            dsl.toString(),
+            MainTest.OUTPUT,
+            output,
+        };
+        boolean caught = false;
+        String message = "";
+        try {
+            Main.main(example);
+        } catch (final ParameterException | IOException | ProcessorException exc) {
+            caught = true;
+            message = exc.getMessage();
+        }
+        Assertions.assertTrue(caught);
+        final String expectedmsg = String.format(
+            "The parameter for the option [--output] should be a path to a source file, found: %s",
+            output
+        );
+        Assertions.assertEquals(expectedmsg, message);
+    }
+
+    /**
+     * Test passing the {@code --output} option with no parameter to main().
+     * @param source A temporary directory
+     */
+    @Test
+    void testOutputOptionWithoutParameter(@TempDir final Path source) throws IOException {
+        final Path code = this.createTempSourceFile(source, MainTest.JAVA);
+        final Path dsl = this.createTempDslFile(source);
+        final String[] example = {
+            MainTest.CODE,
+            code.toString(),
+            MainTest.OUTPUT,
+            MainTest.RULES,
+            dsl.toString(),
+        };
+        boolean caught = false;
+        String message = "";
+        try {
+            Main.main(example);
+        } catch (final ParameterException | IOException | ProcessorException exc) {
+            caught = true;
+            message = exc.getMessage();
+        }
+        Assertions.assertTrue(caught);
+        final String expectedmsg = "Missed parameter for the option [--output]";
+        Assertions.assertEquals(expectedmsg, message);
     }
 
     /**
      * Creates a temporary file with source code to test passing files in CLI options.
      * @param source A temporary directory
+     * @param extension A file extension
      * @return The path to a temporary file
      * @throws IOException If fails to create a temporary file
      */
-    private Path createTempSourceFile(@TempDir final Path source) throws IOException {
-        final Path file = source.resolve("example.java");
+    private Path createTempSourceFile(
+        @TempDir final Path source,
+        final String extension) throws IOException {
+        final Path file = source.resolve("source_example.".concat(extension));
         final List<String> lines = Collections.singletonList(
             "class X{public int calc(){return 2 + 3;}}"
         );
@@ -138,7 +336,7 @@ class MainTest {
      * @throws IOException If fails to create a temporary file
      */
     private Path createTempDslFile(@TempDir final Path source) throws IOException {
-        final Path file = source.resolve("example.txt");
+        final Path file = source.resolve("dsl_example.txt");
         final List<String> lines = Collections.singletonList(
             "Addition(#1, #2) -> Subtraction(#1, #2);"
         );
