@@ -251,39 +251,6 @@ class MainTest {
     }
 
     /**
-     * Test passing the {@code --output} option with wrong value to main().
-     * @param source A temporary directory
-     */
-    @Test
-    void testOutputOptionWithWrongValue(@TempDir final Path source) throws IOException {
-        final Path code = this.createTempSourceFile(source, MainTest.JAVA);
-        final Path dsl = this.createTempDslFile(source);
-        final String output = "F:result.java";
-        final String[] example = {
-            MainTest.CODE,
-            code.toString(),
-            MainTest.RULES,
-            dsl.toString(),
-            MainTest.OUTPUT,
-            output,
-        };
-        boolean caught = false;
-        String message = "";
-        try {
-            Main.main(example);
-        } catch (final ParameterException | IOException | ProcessorException exc) {
-            caught = true;
-            message = exc.getMessage();
-        }
-        Assertions.assertTrue(caught);
-        final String expectedmsg = String.format(
-            "The parameter for the option [--output] should be a path to a source file, found: %s",
-            output
-        );
-        Assertions.assertEquals(expectedmsg, message);
-    }
-
-    /**
      * Test passing the {@code --output} option with no parameter to main().
      * @param source A temporary directory
      */
