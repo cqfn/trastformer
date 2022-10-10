@@ -33,11 +33,14 @@ import java.util.logging.Logger;
 import org.cqfn.astranaut.api.TreeProcessor;
 import org.cqfn.astranaut.core.Node;
 import org.cqfn.astranaut.core.exceptions.BaseException;
+import org.cqfn.astranaut.core.exceptions.WrongFileExtension;
 import org.cqfn.astranaut.core.utils.FilesWriter;
 import org.cqfn.astranaut.core.utils.JsonSerializer;
+import org.cqfn.astranaut.core.utils.TreeVisualizer;
 import org.cqfn.astranaut.exceptions.ProcessorException;
 import org.cqfn.astranaut.utils.cli.RulesFileConverter;
 import org.cqfn.trastformer.cli.FileNameValidator;
+import org.cqfn.uast.cli.ImagePathValidator;
 import org.cqfn.uast.cli.JsonPathValidator;
 import org.cqfn.uast.cli.LanguageConverter;
 import org.cqfn.uast.lang.FactorySelector;
@@ -61,7 +64,7 @@ public final class Main {
      * The source file.
      */
     @Parameter(
-        names = { "--parse", "-p" },
+        names = { "--code", "-c" },
         converter = FileConverter.class,
         required = true,
         arity = 1,
@@ -102,6 +105,17 @@ public final class Main {
         description = "The name (possibly path) of the generated file with extension"
     )
     private File output;
+
+    /**
+     * The image file.
+     */
+    @Parameter(
+        names = { "--image", "-i" },
+        validateWith = ImagePathValidator.class,
+        arity = 1,
+        description = "The name (possibly path) of the image file with extension"
+    )
+    private File image;
 
     /**
      * The programming language for which the analysis is performed.
@@ -189,6 +203,14 @@ public final class Main {
         if (this.json != null) {
             final JsonSerializer serializer = new JsonSerializer(result);
             serializer.serializeToFile(this.json.getPath());
+        }
+        if (this.image != null) {
+            final TreeVisualizer visualizer = new TreeVisualizer(result);
+            try {
+                visualizer.visualize(this.image);
+            } catch (final WrongFileExtension exception) {
+                LOG.severe(String.format("Cannot convert result tree to image"));
+            }
         }
     }
 }
