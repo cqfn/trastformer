@@ -40,25 +40,90 @@ The main steps:
 Syntax:
 
 ```
-java -jar trastformer.jar --parse <path to source file> --rules <path to DSL file> --json <path to JSON file> [optional arguments] 
+java -jar trastformer.jar --code <path to source file> --rules <path to DSL file> --output <path to generated file> [optional arguments] 
 ```
 
 Required arguments:
 
-* `--parse` (short: `-p`), the path to a file that contains source code in some supported programming languages.
+* `--code` (short: `-c`), the path to a file that contains source code in some supported programming languages.
   Expected file extensions are `.txt`, `.java`, `.js`, `.py`.
 * `--rules` (short: `--dsl`, `-r`), the path to a file that contains rules described using the DSL
   syntax, expected file extensions are `.dsl` or `.txt`.
-* `--json` (short: `-j`), the path to the `JSON` file where the result syntax tree will be saved
+* `--output` (short: `-o`), the path to the generated source file where the result generated code will be saved.
+  Supported file extensions: `.java`.
+* `--json` (short: `-j`) [*optional*], the path to the `JSON` file where the result syntax tree will be saved
   in a serialized format, file extension is `.json`. The `JSON` format is described [here](https://github.com/cqfn/astranaut#syntax-tree-representation).
+* `--image` (short: `-i`) [*optional*], the path to the image file where the result syntax tree will be saved
+  in a graphical format. Supported image extensions are `.png` and`.svg`.
 * `--lang` (short: `-l`), the name of the source file language. For Java, it should be `java`,
   for JavaScript - `js` or `javascript`, for Python - `python`.
-  This option is required if the file with the source code has a `.txt` format, otherwise you can omit it.
+  This option is *required* if the file with the source code has a `.txt` format, otherwise you can omit it.
 
-Example:
+Examples:
 
 ```
-java -jar trastformer.jar --parse D:\sources\MyClass.java --rules D:\dsl\rules.dsl -j D:\storage\ResultAst.json
+java -jar trastformer.jar --code D:\sources\MyClass.java --rules D:\dsl\rules.dsl -o D:\storage\ResultCode.java
 ```
 
-See examples of sources, files with rules and results of transformation [here](src/main/examples).
+See real examples of sources, files with rules and results of transformations [here](src/main/examples).
+
+For instance, this is how we ran one of these cases:
+
+```
+java -jar trastformer.jar
+--code
+src/main/examples/field-injector/sources/Program.java
+--rules
+src/main/examples/field-injector/rules.dsl
+--json
+src/main/examples/field-injector/results/java_ast.json
+--output
+src/main/examples/field-injector/results/Program_gen.java
+--image
+src/main/examples/field-injector/results/java_ast.png
+```
+
+This example would transform the code snippet
+```java
+class Program {
+    public int count(final int val) {
+        return val + 10;
+    }
+
+    public int calculateAbs(final int val) {
+        return Math.abs(val);
+    }
+}
+```
+
+into the following
+
+```java
+class Program {
+  private int result;
+
+  public int count() {
+    return this.result + 10;
+  }
+
+  public int calculateAbs(final int val) {
+    return Math.abs(val);
+  }
+}
+```
+
+with 2 DSL rules:
+
+```
+ClassBody(FunctionDeclaration#1) ->
+    ClassBody(
+        FieldDeclaration(ModifierBlock(Modifier<"private">), PrimitiveType<"int">, DeclaratorList(Declarator(Identifier<"result">))),
+        FunctionDeclaration#1
+    );
+
+FunctionDeclaration(#1, #2, Identifier<"count">, #3, #4) ->
+    FunctionDeclaration(
+        #1, #2, Identifier<"count">, ParameterBlock(),
+        StatementBlock(Return(Addition(PropertyAccess(This, Identifier<"result">), IntegerLiteral<"10">)))
+    );
+```

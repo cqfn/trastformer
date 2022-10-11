@@ -1,0 +1,205 @@
+{
+  "root": {
+    "type": "Program",
+    "children": [
+      {
+        "type": "ClassDeclaration",
+        "children": [
+          {
+            "type": "Identifier",
+            "data": "Program"
+          },
+          {
+            "type": "ClassBody",
+            "children": [
+              {
+                "type": "FieldDeclaration",
+                "children": [
+                  {
+                    "type": "ModifierBlock",
+                    "children": [
+                      {
+                        "type": "Modifier",
+                        "data": "private"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "PrimitiveType",
+                    "data": "int"
+                  },
+                  {
+                    "type": "DeclaratorList",
+                    "children": [
+                      {
+                        "type": "Declarator",
+                        "children": [
+                          {
+                            "type": "Identifier",
+                            "data": "result"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FunctionDeclaration",
+                "children": [
+                  {
+                    "type": "ModifierBlock",
+                    "children": [
+                      {
+                        "type": "Modifier",
+                        "data": "public"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "PrimitiveType",
+                    "data": "int"
+                  },
+                  {
+                    "type": "Identifier",
+                    "data": "count"
+                  },
+                  {
+                    "type": "ParameterBlock"
+                  },
+                  {
+                    "type": "StatementBlock",
+                    "children": [
+                      {
+                        "type": "Return",
+                        "children": [
+                          {
+                            "type": "Addition",
+                            "children": [
+                              {
+                                "type": "PropertyAccess",
+                                "children": [
+                                  {
+                                    "type": "This"
+                                  },
+                                  {
+                                    "type": "Identifier",
+                                    "data": "result"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "IntegerLiteral",
+                                "data": "10"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FunctionDeclaration",
+                "children": [
+                  {
+                    "type": "ModifierBlock",
+                    "children": [
+                      {
+                        "type": "Modifier",
+                        "data": "public"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "PrimitiveType",
+                    "data": "int"
+                  },
+                  {
+                    "type": "Identifier",
+                    "data": "calculateAbs"
+                  },
+                  {
+                    "type": "ParameterBlock",
+                    "children": [
+                      {
+                        "type": "Parameter",
+                        "children": [
+                          {
+                            "type": "ModifierBlock",
+                            "children": [
+                              {
+                                "type": "Modifier",
+                                "data": "final"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "PrimitiveType",
+                            "data": "int"
+                          },
+                          {
+                            "type": "Identifier",
+                            "data": "val"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "StatementBlock",
+                    "children": [
+                      {
+                        "type": "Return",
+                        "children": [
+                          {
+                            "type": "FunctionCall",
+                            "children": [
+                              {
+                                "type": "Name",
+                                "children": [
+                                  {
+                                    "type": "Identifier",
+                                    "data": "Math"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "Identifier",
+                                "data": "abs"
+                              },
+                              {
+                                "type": "ExpressionList",
+                                "children": [
+                                  {
+                                    "type": "Variable",
+                                    "children": [
+                                      {
+                                        "type": "Name",
+                                        "children": [
+                                          {
+                                            "type": "Identifier",
+                                            "data": "val"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
