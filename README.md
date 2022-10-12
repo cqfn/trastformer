@@ -1,8 +1,8 @@
 # TrASTformer
 
-![Build and test](https://github.com/unified-ast/trastformer/workflows/Build%20and%20test/badge.svg)
-[![Codecov](https://codecov.io/gh/unified-ast/trastformer/branch/master/graph/badge.svg)](https://codecov.io/gh/unified-ast/unified-ast)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/unified-ast/trastformer/blob/master/LICENSE.txt)
+![Build and test](https://github.com/cqfn/trastformer/workflows/Build%20and%20test/badge.svg)
+[![Codecov](https://codecov.io/gh/cqfn/trastformer/branch/master/graph/badge.svg)](https://codecov.io/gh/cqfn/trastformer)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/cqfn/trastformer/blob/master/LICENSE.txt)
 ___
 
 ## Brief
