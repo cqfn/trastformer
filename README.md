@@ -12,32 +12,6 @@ You can use TrASTformer for:
 - simple cases of library migration
 - complex transformation of code, e.g. for differential testing or testing of static analyzers.
 
-Suppose, you have a project, where you use the `commons-io` library of an old version.
-Previously, the usage of `IOUtils.toInputStream` required a single string argument.
-However, in the newest versions this method is deprecated, so you also need to specify a character encoding.
-
-With our tool you can transform the code snippet:
-
-```java
-public String convert(final String source) {
-    final InputStream stream = IOUtils.toInputStream(source);
-    final String result = IOUtils.toString(stream);
-    stream.close();
-    return result;
-}
-```
-
-into the following
-
-```java
-public String convert(final String source) {
-    final InputStream stream = IOUtils.toInputStream(source, "UTF-8");
-    final String result = IOUtils.toString(stream, "UTF-8");
-    stream.close();
-    return result;
-}
-```
-
 With a single rule `Identifier<"val"> -> Identifier<"num">;`, you can change a variable name:
 
 before
@@ -68,7 +42,7 @@ class Program {
 }
 ```
 
-Or with `BinaryExpression(#1, #2) -> Subtraction(#1, #2);` transform all binary operators into one:
+Or with `ArithmeticExpression(#1, #2) -> Subtraction(#1, #2);` transform all binary arithmetic operators into one:
 
 before:
 
@@ -90,11 +64,75 @@ public class Calc {
 }
 ```
 
+Suppose, you have a project, where you use the `commons-io` library of an old version.
+Previously, the usage of `IOUtils.toInputStream` required a single string argument.
+However, in the newest versions this method is deprecated, so you also need to specify a character encoding.
 
+With our tool you can transform the code snippet:
+
+```java
+public String convert(final String source) {
+    final InputStream stream = IOUtils.toInputStream(source);
+    final String result = IOUtils.toString(stream);
+    stream.close();
+    return result;
+}
+```
+
+into the following
+
+```java
+public String convert(final String source) {
+    final InputStream stream = IOUtils.toInputStream(source, "UTF-8");
+    final String result = IOUtils.toString(stream, "UTF-8");
+    stream.close();
+    return result;
+}
+```
+
+Now suppose that you want to test some static analyzer.
+Assume it has a set of source code programs for testing.
+Running the analyzer on each program should detect one vulnerability.
+
+For example, the program contains a function:
+
+```java
+double count(double value) {
+    return 10 / value;    
+}
+```
+
+After the processing of this program, the analyzer detects a *division by zero* vulnerability. 
+
+But will the analyzer find this error in other code with similar semantics?
+Our tool can make complex mutations of programs to check this, and subsequently extend the testing coverage of analyzers.
+
+For instance, it can transform the provided function into the following:
+
+```java
+class Program { 
+    public double count(double value) {
+        return 10 / value;
+    }
+}
+```
+
+or this one:
+
+```java
+class Program {
+    private double copy;
+
+    public double count(double value) {
+        this.copy = value;
+        return 10 / this.copy;
+    }
+}
+```
 
 The list of **supported mutations**:
 
-TODO
+
 
 
 ## How it works
