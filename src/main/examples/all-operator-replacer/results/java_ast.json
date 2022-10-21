@@ -141,16 +141,16 @@
                         "type": "Return",
                         "children": [
                           {
-                            "type": "Division",
+                            "type": "Subtraction",
                             "children": [
                               {
-                                "type": "Multiplication",
+                                "type": "Subtraction",
                                 "children": [
                                   {
                                     "type": "ParenthesizedExpression",
                                     "children": [
                                       {
-                                        "type": "Addition",
+                                        "type": "Subtraction",
                                         "children": [
                                           {
                                             "type": "Variable",
