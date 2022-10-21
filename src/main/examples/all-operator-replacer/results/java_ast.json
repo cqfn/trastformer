@@ -1,0 +1,231 @@
+{
+  "root": {
+    "type": "Program",
+    "children": [
+      {
+        "type": "ClassDeclaration",
+        "children": [
+          {
+            "type": "ModifierBlock",
+            "children": [
+              {
+                "type": "Modifier",
+                "data": "public"
+              }
+            ]
+          },
+          {
+            "type": "Identifier",
+            "data": "Calc"
+          },
+          {
+            "type": "ClassBody",
+            "children": [
+              {
+                "type": "FunctionDeclaration",
+                "children": [
+                  {
+                    "type": "ModifierBlock",
+                    "children": [
+                      {
+                        "type": "Modifier",
+                        "data": "public"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "PrimitiveType",
+                    "data": "double"
+                  },
+                  {
+                    "type": "Identifier",
+                    "data": "calc"
+                  },
+                  {
+                    "type": "ParameterBlock",
+                    "children": [
+                      {
+                        "type": "Parameter",
+                        "children": [
+                          {
+                            "type": "ModifierBlock",
+                            "children": [
+                              {
+                                "type": "Modifier",
+                                "data": "final"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "PrimitiveType",
+                            "data": "int"
+                          },
+                          {
+                            "type": "Identifier",
+                            "data": "alpha"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Parameter",
+                        "children": [
+                          {
+                            "type": "ModifierBlock",
+                            "children": [
+                              {
+                                "type": "Modifier",
+                                "data": "final"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "PrimitiveType",
+                            "data": "long"
+                          },
+                          {
+                            "type": "Identifier",
+                            "data": "beta"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Parameter",
+                        "children": [
+                          {
+                            "type": "ModifierBlock",
+                            "children": [
+                              {
+                                "type": "Modifier",
+                                "data": "final"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "PrimitiveType",
+                            "data": "float"
+                          },
+                          {
+                            "type": "Identifier",
+                            "data": "gamma"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Parameter",
+                        "children": [
+                          {
+                            "type": "ModifierBlock",
+                            "children": [
+                              {
+                                "type": "Modifier",
+                                "data": "final"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "PrimitiveType",
+                            "data": "double"
+                          },
+                          {
+                            "type": "Identifier",
+                            "data": "delta"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "StatementBlock",
+                    "children": [
+                      {
+                        "type": "Return",
+                        "children": [
+                          {
+                            "type": "Division",
+                            "children": [
+                              {
+                                "type": "Multiplication",
+                                "children": [
+                                  {
+                                    "type": "ParenthesizedExpression",
+                                    "children": [
+                                      {
+                                        "type": "Addition",
+                                        "children": [
+                                          {
+                                            "type": "Variable",
+                                            "children": [
+                                              {
+                                                "type": "Name",
+                                                "children": [
+                                                  {
+                                                    "type": "Identifier",
+                                                    "data": "alpha"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "type": "Variable",
+                                            "children": [
+                                              {
+                                                "type": "Name",
+                                                "children": [
+                                                  {
+                                                    "type": "Identifier",
+                                                    "data": "beta"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "Variable",
+                                    "children": [
+                                      {
+                                        "type": "Name",
+                                        "children": [
+                                          {
+                                            "type": "Identifier",
+                                            "data": "gamma"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "Variable",
+                                "children": [
+                                  {
+                                    "type": "Name",
+                                    "children": [
+                                      {
+                                        "type": "Identifier",
+                                        "data": "delta"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

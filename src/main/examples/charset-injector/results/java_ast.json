@@ -1,0 +1,309 @@
+{
+  "root": {
+    "type": "Program",
+    "children": [
+      {
+        "type": "ClassDeclaration",
+        "children": [
+          {
+            "type": "ModifierBlock"
+          },
+          {
+            "type": "Identifier",
+            "data": "Program"
+          },
+          {
+            "type": "ClassBody",
+            "children": [
+              {
+                "type": "FunctionDeclaration",
+                "children": [
+                  {
+                    "type": "ModifierBlock",
+                    "children": [
+                      {
+                        "type": "Modifier",
+                        "data": "public"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "ClassType",
+                    "children": [
+                      {
+                        "type": "Name",
+                        "children": [
+                          {
+                            "type": "Identifier",
+                            "data": "String"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Identifier",
+                    "data": "convert"
+                  },
+                  {
+                    "type": "ParameterBlock",
+                    "children": [
+                      {
+                        "type": "Parameter",
+                        "children": [
+                          {
+                            "type": "ModifierBlock",
+                            "children": [
+                              {
+                                "type": "Modifier",
+                                "data": "final"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "ClassType",
+                            "children": [
+                              {
+                                "type": "Name",
+                                "children": [
+                                  {
+                                    "type": "Identifier",
+                                    "data": "String"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "Identifier",
+                            "data": "source"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "StatementBlock",
+                    "children": [
+                      {
+                        "type": "VariableDeclaration",
+                        "children": [
+                          {
+                            "type": "ModifierBlock",
+                            "children": [
+                              {
+                                "type": "Modifier",
+                                "data": "final"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "ClassType",
+                            "children": [
+                              {
+                                "type": "Name",
+                                "children": [
+                                  {
+                                    "type": "Identifier",
+                                    "data": "InputStream"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "DeclaratorList",
+                            "children": [
+                              {
+                                "type": "Declarator",
+                                "children": [
+                                  {
+                                    "type": "Identifier",
+                                    "data": "stream"
+                                  },
+                                  {
+                                    "type": "FunctionCall",
+                                    "children": [
+                                      {
+                                        "type": "Name",
+                                        "children": [
+                                          {
+                                            "type": "Identifier",
+                                            "data": "IOUtils"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "Identifier",
+                                        "data": "toInputStream"
+                                      },
+                                      {
+                                        "type": "ExpressionList",
+                                        "children": [
+                                          {
+                                            "type": "Variable",
+                                            "children": [
+                                              {
+                                                "type": "Name",
+                                                "children": [
+                                                  {
+                                                    "type": "Identifier",
+                                                    "data": "source"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "type": "StringLiteral",
+                                            "data": "UTF-8"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "VariableDeclaration",
+                        "children": [
+                          {
+                            "type": "ModifierBlock",
+                            "children": [
+                              {
+                                "type": "Modifier",
+                                "data": "final"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "ClassType",
+                            "children": [
+                              {
+                                "type": "Name",
+                                "children": [
+                                  {
+                                    "type": "Identifier",
+                                    "data": "String"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "DeclaratorList",
+                            "children": [
+                              {
+                                "type": "Declarator",
+                                "children": [
+                                  {
+                                    "type": "Identifier",
+                                    "data": "result"
+                                  },
+                                  {
+                                    "type": "FunctionCall",
+                                    "children": [
+                                      {
+                                        "type": "Name",
+                                        "children": [
+                                          {
+                                            "type": "Identifier",
+                                            "data": "IOUtils"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "Identifier",
+                                        "data": "toString"
+                                      },
+                                      {
+                                        "type": "ExpressionList",
+                                        "children": [
+                                          {
+                                            "type": "Variable",
+                                            "children": [
+                                              {
+                                                "type": "Name",
+                                                "children": [
+                                                  {
+                                                    "type": "Identifier",
+                                                    "data": "stream"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "type": "StringLiteral",
+                                            "data": "UTF-8"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "ExpressionStatement",
+                        "children": [
+                          {
+                            "type": "FunctionCall",
+                            "children": [
+                              {
+                                "type": "Name",
+                                "children": [
+                                  {
+                                    "type": "Identifier",
+                                    "data": "stream"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "Identifier",
+                                "data": "close"
+                              },
+                              {
+                                "type": "ExpressionList"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Return",
+                        "children": [
+                          {
+                            "type": "Variable",
+                            "children": [
+                              {
+                                "type": "Name",
+                                "children": [
+                                  {
+                                    "type": "Identifier",
+                                    "data": "result"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
