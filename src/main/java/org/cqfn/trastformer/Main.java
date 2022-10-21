@@ -68,7 +68,7 @@ public final class Main {
         converter = FileConverter.class,
         required = true,
         arity = 1,
-        description = "The file with source code"
+        description = "The file with source code. Expected extensions: .txt, .java, .js, .py"
     )
     private File source;
 
@@ -79,7 +79,7 @@ public final class Main {
         names = { "--rules", "--dsl", "-r" },
         converter = RulesFileConverter.class,
         required = true,
-        description = "Text file with DSL descriptions"
+        description = "Text file with DSL descriptions. Expected extensions: .txt, .dsl"
     )
     private File dsl;
 
@@ -90,7 +90,7 @@ public final class Main {
         names = { "--json", "-j" },
         validateWith = JsonPathValidator.class,
         arity = 1,
-        description = "The name (possibly path) of the json file with extension"
+        description = "The name (path) of the json file with extension"
     )
     private File json;
 
@@ -102,7 +102,7 @@ public final class Main {
         validateWith = FileNameValidator.class,
         required = true,
         arity = 1,
-        description = "The name (possibly path) of the generated file with extension"
+        description = "The name (path) of the generated file with extension. Supported: .java"
     )
     private File output;
 
@@ -113,7 +113,7 @@ public final class Main {
         names = { "--image", "-i" },
         validateWith = ImagePathValidator.class,
         arity = 1,
-        description = "The name (possibly path) of the image file with extension"
+        description = "The name (path) of the image file with extension. Expected: .png, .svg"
     )
     private File image;
 
@@ -124,7 +124,7 @@ public final class Main {
         names = { "--lang", "-l" },
         converter = LanguageConverter.class,
         arity = 1,
-        description = "The programming language of the source file"
+        description = "The programming language of the text source file: java, js, or python"
     )
     private String language;
 
