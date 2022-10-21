@@ -1,14 +1,103 @@
-# TrASTformer
-
 ![Build and test](https://github.com/cqfn/trastformer/workflows/Build%20and%20test/badge.svg)
 [![Codecov](https://codecov.io/gh/cqfn/trastformer/branch/master/graph/badge.svg)](https://codecov.io/gh/cqfn/trastformer)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/cqfn/trastformer/blob/master/LICENSE.txt)
 ___
 
-## Brief
 
-*TrASTformer* is a tool that performs transformation of source code with the usage of rules written 
-in a special domain-specific language.
+*TrASTformer* is a tool that performs rule-based transformation of source code.
+Transformation rules are written in a special domain-specific language.
+
+You can use TrASTformer for:
+- mutation testing
+- simple cases of library migration
+- complex transformation of code, e.g. for differential testing or testing of static analyzers.
+
+Suppose, you have a project, where you use the `commons-io` library of an old version.
+Previously, the usage of `IOUtils.toInputStream` required a single string argument.
+However, in the newest versions this method is deprecated, so you also need to specify a character encoding.
+
+With our tool you can transform the code snippet:
+
+```java
+public String convert(final String source) {
+    final InputStream stream = IOUtils.toInputStream(source);
+    final String result = IOUtils.toString(stream);
+    stream.close();
+    return result;
+}
+```
+
+into the following
+
+```java
+public String convert(final String source) {
+    final InputStream stream = IOUtils.toInputStream(source, "UTF-8");
+    final String result = IOUtils.toString(stream, "UTF-8");
+    stream.close();
+    return result;
+}
+```
+
+With a single rule `Identifier<"val"> -> Identifier<"num">;`, you can change a variable name:
+
+before
+
+```java
+class Program {
+    public int count(final int val) {
+        return val + 10;
+    }
+
+    public int calculateAbs(final int val) {
+        return Math.abs(val);
+    }
+}
+```
+
+after
+
+```java
+class Program {
+    public int count(final int num) {
+        return num + 10;
+    }
+
+    public int calculateAbs(final int num) {
+        return Math.abs(num);
+    }
+}
+```
+
+Or with `BinaryExpression(#1, #2) -> Subtraction(#1, #2);` transform all binary operators into one:
+
+before:
+
+```java
+public class Calc {
+    public double calc(final int alpha, final long beta, final float gamma, final double delta) {
+        return (alpha + beta) * gamma / delta;
+    }
+}
+```
+
+after:
+
+```java
+public class Calc {
+  public double calc(final int alpha, final long beta, final float gamma, final double delta) {
+    return (alpha - beta) - gamma - delta;
+  }
+}
+```
+
+
+
+The list of **supported mutations**:
+
+TODO
+
+
+## How it works
 
 The main steps:
 
@@ -23,8 +112,6 @@ The main steps:
 - Unifies a third-party AST model into our custom structure, called [UAST](https://github.com/cqfn/uast) (unified AST);
 - Transforms the UAST with the provided DSL rules;
 - Generates source code from the modified tree.
-
-> The last step has not been implemented yet. For now, the intermediate output (a transformed UAST) is saved in JSON format.
 
 ## Requirements
 
@@ -42,22 +129,6 @@ Syntax:
 ```
 java -jar trastformer.jar --code <path to source file> --rules <path to DSL file> --output <path to generated file> [optional arguments] 
 ```
-
-Required arguments:
-
-* `--code` (short: `-c`), the path to a file that contains source code in some supported programming languages.
-  Expected file extensions are `.txt`, `.java`, `.js`, `.py`.
-* `--rules` (short: `--dsl`, `-r`), the path to a file that contains rules described using the DSL
-  syntax, expected file extensions are `.dsl` or `.txt`.
-* `--output` (short: `-o`), the path to the generated source file where the result generated code will be saved.
-  Supported file extensions: `.java`.
-* `--json` (short: `-j`) [*optional*], the path to the `JSON` file where the result syntax tree will be saved
-  in a serialized format, file extension is `.json`. The `JSON` format is described [here](https://github.com/cqfn/astranaut#syntax-tree-representation).
-* `--image` (short: `-i`) [*optional*], the path to the image file where the result syntax tree will be saved
-  in a graphical format. Supported image extensions are `.png` and`.svg`.
-* `--lang` (short: `-l`), the name of the source file language. For Java, it should be `java`,
-  for JavaScript - `js` or `javascript`, for Python - `python`.
-  This option is *required* if the file with the source code has a `.txt` format, otherwise you can omit it.
 
 Examples:
 
@@ -81,49 +152,4 @@ src/main/examples/field-injector/results/java_ast.json
 src/main/examples/field-injector/results/Program_gen.java
 --image
 src/main/examples/field-injector/results/java_ast.png
-```
-
-This example would transform the code snippet
-```java
-class Program {
-    public int count(final int val) {
-        return val + 10;
-    }
-
-    public int calculateAbs(final int val) {
-        return Math.abs(val);
-    }
-}
-```
-
-into the following
-
-```java
-class Program {
-  private int result;
-
-  public int count() {
-    return this.result + 10;
-  }
-
-  public int calculateAbs(final int val) {
-    return Math.abs(val);
-  }
-}
-```
-
-with 2 DSL rules:
-
-```
-ClassBody(FunctionDeclaration#1) ->
-    ClassBody(
-        FieldDeclaration(ModifierBlock(Modifier<"private">), PrimitiveType<"int">, DeclaratorList(Declarator(Identifier<"result">))),
-        FunctionDeclaration#1
-    );
-
-FunctionDeclaration(#1, #2, Identifier<"count">, #3, #4) ->
-    FunctionDeclaration(
-        #1, #2, Identifier<"count">, ParameterBlock(),
-        StatementBlock(Return(Addition(PropertyAccess(This, Identifier<"result">), IntegerLiteral<"10">)))
-    );
 ```
