@@ -130,10 +130,29 @@ class Program {
 }
 ```
 
-The list of **supported mutations**:
+We divide possible changes of code into *simple* and *complex*:
 
+- A simple change is a single transformation inside an abstract syntax tree (AST) of initial code, e.g., changing a node value,
+replacing a node type, deleting a subtree, or inserting a subtree.
+- A complex change is a combination of different transformations inside an AST, e.g., inserting and deletion of subtrees
+in various places of the initial AST. In most cases, such transformations are achievable by making several rules.
 
+The list of **simple supported transformations**:
 
+| Type        | Rule example| Before     | After
+| :---        | :---        | :---       | :---
+| Variable renaming      | Identifier<"n"> -> Identifier<"num">;               | `int  n = 5;`  | `int  num = 5;`
+| Literal replacement    | IntegerLiteral<"5"> -> IntegerLiteral<"10">;             | `int  n = 5;`  | `int  n = 10;`
+| Inversion              | IntegerLiteral<#1> -> Negative(IntegerLiteral<#1>);  | `int  n = 5;`  | `int  n = -5;`
+| Arithmetic operands replacement | Addition(#1, #2) -> Multiplication(#1, #2);  | `int  n =  x + y;`  | `int  n =  x * y;`
+| Unary operands replacement | PreIncrement(#1) -> PostIncrement(#1);  | `++x;`  | `x++;`
+| Conditionals replacement | GreaterThan(#1, #2) -> GreaterThanOrEqualTo(#1, #2);  | `return x > y;`  | `return x >= y;`
+| Parameters swapping | ParameterBlock(#1, #2) -> ParameterBlock(#2, #1);  | `int calc(float x, double y){}`  | `int calc(double y, float x){}`
+| Content removal | ParameterBlock(#1...) -> ParameterBlock();  | `int calc(float x, double y){}`  | `int calc(){}`
+| Statement insertion | StatementBlock() -> StatementBlock(Return(IntegerLiteral<"10">));  | `int getval(){}`  | `int getval(){return 10;}`
+| Statement replacement | FunctionCall(#1, #2, #3) -> FunctionCall(Identifier<"create">, ExpressionList(Variable(Name(Identifier<"a">)))); | `A.build();`  | `create(a);`
+| Expression insertion | Return(#1) -> Return(FunctionCall(Name(Identifier<"Math">), Identifier<"abs">), ExpressionList(#1));  | `int getval(return 10;){}`  | `int getval(){return Math.abs(10);}`
+| Expression replacement | VariableDeclaration(#1, DeclaratorList(Declarator(#2, #3))) -> VariableDeclaration(#1, DeclaratorList(Declarator(#2, NullLiteral))); | `Object obj = new Object();`  | `Object obj = null;}`
 
 ## How it works
 
@@ -150,6 +169,8 @@ The main steps:
 - Unifies a third-party AST model into our custom structure, called [UAST](https://github.com/cqfn/uast) (unified AST);
 - Transforms the UAST with the provided DSL rules;
 - Generates source code from the modified tree.
+
+> For now, generation supports only Java language
 
 ## Requirements
 
